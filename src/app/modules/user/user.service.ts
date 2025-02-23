@@ -108,10 +108,8 @@ const createFacultyIntoDB = async (
     session.startTransaction();
     //set  generated id
     // userData.id = await generateFacultyId();
-    userData.id = "modaretor123"
-
     if (file) {
-      const imageName = `${userData.id}${payload?.name?.firstName}`;
+      const imageName = `${userData.email}${payload?.name?.firstName}`;
       const path = file?.path;
       //send image to cloudinary
       const { secure_url } = await sendImageToCloudinary(imageName, path);
@@ -126,7 +124,7 @@ const createFacultyIntoDB = async (
       throw new AppError(httpStatus.BAD_REQUEST, 'Failed to create user');
     }
     // set id , _id as user
-    payload.id = newUser[0].id;
+    payload.email = newUser[0].email;
     payload.user = newUser[0]._id; //reference _id
 
     // create a faculty (transaction-2)
@@ -139,6 +137,31 @@ const createFacultyIntoDB = async (
 
     await session.commitTransaction();
     await session.endSession();
+    const plainPassword = password || (config.default_password as string);
+
+    const subject = 'Welcome to ResearchUstad'
+    const emailContent = `
+       <h2 style="color: #4CAF50; text-align: center;">Welcome to ResearchUstad!</h2>
+    <p>Dear ${payload.name.firstName} ${payload.name.lastName},</p>
+    <p>Congratulations! Your account has been successfully created on <strong>ResearchUstad</strong>. You now have access to our platform and can start exploring.</p>
+
+    <h3>Your Account Details:</h3>
+    <ul>
+      <li><strong>Email:</strong>  ${newUser[0].email}</li>
+      <li><strong>Password:</strong> ${plainPassword}</li>
+    </ul>
+
+    <p>For security reasons, we strongly recommend that you change your password immediately after logging in.</p>
+
+    <p><a href="${config.frontend_url} style="background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">Log In</a></p>
+
+    <p>If you have any questions, feel free to reach out to our support team.</p>
+
+    <p>Best regards,</p>
+    <p><strong>The ResearchUstad Team</strong></p>
+    `;
+
+    await sendEmail(newUser[0].email, emailContent, subject);
 
     return newFaculty;
   } catch (err: any) {
@@ -169,10 +192,8 @@ const createAdminIntoDB = async (
     session.startTransaction();
     //set  generated id
     // userData.id = await generateAdminId();
-    userData.id = "admin123"
-
     if (file) {
-      const imageName = `${userData.id}${payload?.name?.firstName}`;
+      const imageName = `${userData.email}${payload?.name?.firstName}`;
       const path = file?.path;
       //send image to cloudinary
       const { secure_url } = await sendImageToCloudinary(imageName, path);
@@ -187,7 +208,7 @@ const createAdminIntoDB = async (
       throw new AppError(httpStatus.BAD_REQUEST, 'Failed to create admin');
     }
     // set id , _id as user
-    payload.id = newUser[0].id;
+    payload.email = newUser[0].email;
     payload.user = newUser[0]._id; //reference _id
 
     // create a admin (transaction-2)
@@ -199,6 +220,31 @@ const createAdminIntoDB = async (
 
     await session.commitTransaction();
     await session.endSession();
+    const plainPassword = password || (config.default_password as string);
+
+    const subject = 'Welcome to ResearchUstad'
+    const emailContent = `
+       <h2 style="color: #4CAF50; text-align: center;">Welcome to ResearchUstad!</h2>
+    <p>Dear ${payload.name.firstName} ${payload.name.lastName},</p>
+    <p>Congratulations! Your account has been successfully created on <strong>ResearchUstad</strong>. You now have access to our platform and can start exploring.</p>
+
+    <h3>Your Account Details:</h3>
+    <ul>
+      <li><strong>Email:</strong>  ${newUser[0].email}</li>
+      <li><strong>Password:</strong> ${plainPassword}</li>
+    </ul>
+
+    <p>For security reasons, we strongly recommend that you change your password immediately after logging in.</p>
+
+    <p><a href="${config.frontend_url} style="background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">Log In</a></p>
+
+    <p>If you have any questions, feel free to reach out to our support team.</p>
+
+    <p>Best regards,</p>
+    <p><strong>The ResearchUstad Team</strong></p>
+    `;
+
+    await sendEmail(newUser[0].email, emailContent, subject);
 
     return newAdmin;
   } catch (err: any) {
@@ -208,24 +254,24 @@ const createAdminIntoDB = async (
   }
 };
 
-const getMe = async (userId: string, role: string) => {
+const getMe = async (email: string, role: string) => {
   let result = null;
   if (role === 'student') {
-    result = await Student.findOne({ id: userId }).populate('user');
+    result = await Student.findOne({ email: email }).populate('user');
   }
   if (role === 'admin') {
-    result = await Admin.findOne({ id: userId }).populate('user');
+    result = await Admin.findOne({ email: email }).populate('user');
   }
 
   if (role === 'faculty') {
-    result = await Faculty.findOne({ id: userId }).populate('user');
+    result = await Faculty.findOne({ email: email }).populate('user');
   }
 
   return result;
 };
 
-const changeStatus = async (id: string, payload: { status: string }) => {
-  const result = await User.findByIdAndUpdate(id, payload, {
+const changeStatus = async (email: string, payload: { status: string }) => {
+  const result = await User.findByIdAndUpdate(email, payload, {
     new: true,
   });
   return result;

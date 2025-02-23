@@ -28,9 +28,7 @@ const getAllFacultiesFromDB = async (query: Record<string, unknown>) => {
 };
 
 const getSingleFacultyFromDB = async (email: string) => {
-  const result = await Faculty.findById(email).populate(
-    'academicDepartment academicFaculty',
-  );
+  const result = await Faculty.findById(email)
 
   return result;
 };

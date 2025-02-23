@@ -23,11 +23,6 @@ const userNameSchema = new Schema<TUserName>({
 
 const facultySchema = new Schema<TFaculty, FacultyModel>(
   {
-    id: {
-      type: String,
-      required: [true, 'ID is required'],
-      unique: true,
-    },
     user: {
       type: Schema.Types.ObjectId,
       required: [true, 'User id is required'],

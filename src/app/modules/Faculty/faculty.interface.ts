@@ -18,7 +18,6 @@ export type TUserName = {
 };
 
 export type TFaculty = {
-  id: string;
   user: Types.ObjectId;
   designation: string;
   name: TUserName;
