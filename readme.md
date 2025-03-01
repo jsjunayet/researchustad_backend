@@ -10,7 +10,7 @@ Description: This document outlines the detailed analysis of project requirement
 
 ![ER DIAGRAM](./erdiagram.png)
 
-Description: This is an updated diagram illustrates the relationships among User, Student, Admin, Faculty, Academic Semester, Academic Faculty, Academic Department , Course , Semester Registration , Offered Couse.
+Description: This is a researchUstad platform.
 
 ---
 
