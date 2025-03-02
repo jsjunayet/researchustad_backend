@@ -11,6 +11,8 @@ Description: This document outlines the detailed analysis of project requirement
 ![ER DIAGRAM](./erdiagram.png)
 
 Description: This is a researchUstad platform.
+Description: This is a researchUstad platform.
+
 
 ---
 
