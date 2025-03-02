@@ -20,6 +20,22 @@ const createStudent = catchAsync(async (req, res) => {
   });
 });
 
+const createResearchAssociate = catchAsync(async (req, res) => {
+  const { password, ResearchAssociate: ResearchAssociateData} = req.body;
+  const result = await UserServices.createResearchAssociate(
+    req.file,
+    password,
+    ResearchAssociateData,
+  );
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'ResearchAssociate is created succesfully',
+    data: result,
+  });
+});
+
 const createFaculty = catchAsync(async (req, res) => {
   const { password, faculty: facultyData } = req.body;
 
@@ -84,4 +100,5 @@ export const UserControllers = {
   createAdmin,
   getMe,
   changeStatus,
+  createResearchAssociate
 };

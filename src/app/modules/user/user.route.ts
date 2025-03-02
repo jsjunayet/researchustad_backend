@@ -9,7 +9,8 @@ import { USER_ROLE } from './user.constant';
 
 import { UserControllers } from './user.controller';
 import { UserValidation } from './user.validation';
-import { createStudentValidationSchema } from '../Student/student.validation';
+import { createStudentValidationSchema } from '../student/student.validation';
+import { ResearchAssociateValidation } from '../ResearchAssociate/ResearchAssociate.validation';
 
 
 const router = express.Router();
@@ -35,9 +36,20 @@ router.post(
     next();
   },
   validateRequest(createFacultyValidationSchema),
-  UserControllers.createFaculty,
+  UserControllers.createResearchAssociate,
 );
 
+router.post(
+  '/create-ResearchAssociate',
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin),
+  upload.single('file'),
+  (req: Request, res: Response, next: NextFunction) => {
+    req.body = JSON.parse(req.body.data);
+    next();
+  },
+  validateRequest(ResearchAssociateValidation.createValidationSchema),
+  UserControllers.createResearchAssociate,
+);
 router.post(
   '/create-admin',
   auth(USER_ROLE.superAdmin, USER_ROLE.admin),
