@@ -18,30 +18,30 @@ const ResearchAssociateSchema = new Schema<IResearchAssociate>(
         unique: true,
       },
       contactNo: { type: String, required: [true, 'Contact number is required'] },
-    fullName: { type: String, required: true }, 
-    designation: { type: String, required: true },
+    fullName: { type: String, default: '' }, 
+    designation: { type: String, default: '' },
     current: 
       {
-        institution: { type: String, required: true },
-        department: { type: String, required: true },
-        degree: { type: String, required: true },
+        institution: { type: String, default: '' },
+        department: { type: String, default: '' },
+        degree: { type: String, default: '' },
       },
 
     education: 
       {
-        degree: { type: String, required: true },
-        field: { type: String, required: true },
-        institution: { type: String, required: true },
-        status: { type: String, enum: ["Ongoing", "Completed"], required: true },
-        scholarship: { type: String },
+        degree: { type: String, default: '' },
+        field: { type: String, default: '' },
+        institution: { type: String, default: '' },
+        status: { type: String, enum: ["Ongoing", "Completed"], default: 'Ongoing' },
+        scholarship: { type: String , default:''},
       },
   
     research: [{ type: String }],
-    shortBio: { type: String }, 
+    shortBio: { type: String,default:'' }, 
     socialLinks: {
-      facebook: { type: String },
-      twitter: { type: String },
-      linkedin: { type: String },
+      facebook: { type: String,default:'' },
+      twitter: { type: String, default:'' },
+      linkedin: { type: String,default:'' },
     },
 
     isDeleted: {

@@ -6,8 +6,6 @@ import AppError from '../../errors/AppError';
 import { User } from '../User/user.model';
 import { ResearchAssociate } from './ResearchAssociate.model';
 import { IResearchAssociate } from './ResearchAssociate.interface';
-;
-
 const getAllAssociate = async (query: Record<string, unknown>) => {
   const facultyQuery = new QueryBuilder(
     ResearchAssociate.find(),
@@ -34,21 +32,21 @@ const getSingleAssociate = async (email: string) => {
 };
 
 const updateAssociate = async (email: string, payload: Partial<IResearchAssociate>) => {
-  const { current, education,socialLinks, ...remainingFacultyData } = payload;
+  const { current, education,socialLinks, ...remainingAssociateData } = payload;
 
   const modifiedUpdatedData: Record<string, unknown> = {
-    ...remainingFacultyData,
+    ...remainingAssociateData,
   };
   if (current && Object.keys(current).length) {
     for (const [key, value] of Object.entries(current)) {
       modifiedUpdatedData[`current.${key}`] = value;
     }
   }
-  if (education && Object.keys(education).length) {
-    for (const [key, value] of Object.entries(education)) {
-      modifiedUpdatedData[`education.${key}`] = value;
-    }
+if(education && Object.keys(education).length){
+  for(const[key, value] of Object.entries(education)){
+    modifiedUpdatedData[`education.${key}`]=value
   }
+}
   if (socialLinks && Object.keys(socialLinks).length) {
     for (const [key, value] of Object.entries(socialLinks)) {
       modifiedUpdatedData[`socialLinks.${key}`] = value;
@@ -62,14 +60,14 @@ const updateAssociate = async (email: string, payload: Partial<IResearchAssociat
   return result;
 };
 
-const deleteAssociate = async (email: string) => {
+const deleteAssociate = async (id: string) => {
   const session = await mongoose.startSession();
 
   try {
     session.startTransaction();
 
     const deletedAssociate = await ResearchAssociate.findByIdAndUpdate(
-      email,
+      id,
       { isDeleted: true },
       { new: true, session },
     );

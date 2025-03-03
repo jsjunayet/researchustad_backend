@@ -4,13 +4,13 @@ const createValidationSchema = z.object({
     body:z.object({
         password: z.string().max(20),
         ResearchAssociate:z.object({
-            email: z.string().email({ message: "Invalid email format." }).optional(),
+            email: z.string().email({ message: "Invalid email format." }),
       
-            contactNo: z.string().min(10, { message: "Contact number must be at least 10 digits." }).optional(),
+            contactNo: z.string().min(10, { message: "Contact number must be at least 10 digits." }),
           
-            fullName: z.string().min(1, { message: "Full name is required." }).optional(),
+            fullName: z.string().min(1, { message: "Full name is required." }),
           
-            designation: z.string().min(1, { message: "Designation is required." }).optional(),
+            designation: z.string().min(1, { message: "Designation is required." }),
           
             current: 
               z.object({
