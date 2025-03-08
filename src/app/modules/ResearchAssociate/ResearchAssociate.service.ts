@@ -46,7 +46,24 @@ const getAllAssociate = async (query: Record<string, unknown>) => {
 //     meta,
 //   };
 // };
+// const getAllAssociate = async (query: Record<string, unknown>) => {
+//   const facultyQuery = new QueryBuilder(
+//     ResearchAssociate.find(),
+//     query,
+//   )
+//     .search(['email'])
+//     .filter()
+//     .sort()
+//     .paginate()
+//     .fields();
 
+//   const result = await facultyQuery.modelQuery;
+//   const meta = await facultyQuery.countTotal();
+//   return {
+//     result,
+//     meta,
+//   };
+// };
 const getSingleAssociate = async (email: string) => {
   const result = await ResearchAssociate.findById(email)
 
