@@ -8,6 +8,7 @@ import { ResearchAssociate } from './ResearchAssociate.model';
 // import { ResearchAssociate } from './ResearchAssociate.model';
 // import { ResearchAssociate } from './ResearchAssociate.model';
 // import { ResearchAssociate } from './ResearchAssociate.model';
+// import { ResearchAssociate } from './ResearchAssociate.model';
 
 import { IResearchAssociate } from './ResearchAssociate.interface';
 const getAllAssociate = async (query: Record<string, unknown>) => {
