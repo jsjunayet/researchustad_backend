@@ -65,6 +65,7 @@ const getAllAssociate = async (query: Record<string, unknown>) => {
 //     meta,
 //   };
 // };
+// };
 const getSingleAssociate = async (email: string) => {
   const result = await ResearchAssociate.findById(email)
 
