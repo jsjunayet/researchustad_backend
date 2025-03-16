@@ -52,4 +52,6 @@ const updateCourseStatus = async () => {
 };
 
 setInterval(updateCourseStatus, 10 * 1000);
+// setInterval(updateCourseStatus, 10 * 1000);
+
 export default app;
