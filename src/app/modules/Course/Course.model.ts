@@ -8,7 +8,7 @@ const courseSchema = new Schema<Icourse>({
     instruction:{type:String, required:true},
    syllabus:{type:String, required:true},
    category:{type:String, required:true},
-   image:{type:String, required:true},
+   image:{type:String, required:true, default:''},
    fee:{type:Number, required:true},
    status:{type:String, enum:['upcoming',"ongoing"], default:"upcoming"}
 })

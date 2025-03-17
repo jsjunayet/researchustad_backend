@@ -14,7 +14,8 @@ const GetCourse = catchAsync(async (req, res) => {
   });
 const PostCourse= catchAsync(async (req,res) =>{
 const body = req.body;
-const result = await courseService.PostCourse(body)
+
+const result = await courseService.PostCourse(body,req.file)
 sendResponse(res,{
       statusCode: httpStatus.OK,
       success: true,

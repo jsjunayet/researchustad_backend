@@ -38,20 +38,37 @@ app.use(globalErrorHandler);
 //Not Found
 app.use(notFound);
 const updateCourseStatus = async () => {
-  const now = new Date();
-  const upcomingCourses = await courseModel.find({ status: "upcoming" });
-  for (const course of upcomingCourses) {
-    const courseStartDate = new Date(course.startDate);
-        if (courseStartDate.getTime() <= now.getTime()) {
+  try {
+    const now = new Date();
+    const nowUTC = new Date(now.toISOString()); 
+    console.log('[DEBUG] Current UTC time:', nowUTC.toISOString());
+    const upcomingCourses = await courseModel.find({ 
+      status: "upcoming",
+      startDate: { $lte: nowUTC }
+    });
+    console.log(`[DEBUG] Found ${upcomingCourses.length} courses to update`);
+    
+    for (const course of upcomingCourses) {
+      console.log('[DEBUG] Course details:', {
+        _id: course._id,
+        storedStart: course.startDate.toISOString(),
+        comparison: course.startDate.toISOString() <= nowUTC.toISOString()
+      });
+
       course.status = "ongoing";
       await course.save();
+      console.log(`[DEBUG] Updated course ${course._id} to ongoing`);
     }
+
+    // 4. Emit updates (consider emitting only changed courses)
+    io.emit("courseUpdate", await courseModel.find());
+  } catch (error) {
+    console.error('Error in updateCourseStatus:', error);
   }
-  const updatedCourses = await courseModel.find();
-  io.emit("courseUpdate", updatedCourses);
 };
 
+
+
 setInterval(updateCourseStatus, 10 * 1000);
-// setInterval(updateCourseStatus, 10 * 1000);
 
 export default app;
