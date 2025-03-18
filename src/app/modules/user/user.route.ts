@@ -4,13 +4,9 @@ import auth from '../../middlewares/auth';
 import validateRequest from '../../middlewares/validateRequest';
 import { upload } from '../../utils/sendImageToCloudinary';
 import { USER_ROLE } from './user.constant';
-
-import { ResearchAssociateValidation } from '../ResearchAssociate/ResearchAssociate.validation';
+import { ResearchAssociateValidation } from '../ResearchMembar/ResearchMembar.validation';
 import { UserControllers } from './user.controller';
-
-
 const router = express.Router();
-
 router.post(
   '/create-ResearchAssociate',
   auth(USER_ROLE.superAdmin),
@@ -27,7 +23,7 @@ router.get(
   '/me',
   auth(
     USER_ROLE.superAdmin,
-    USER_ROLE.ResearchAssociate
+    USER_ROLE.Research_Associate
   ),
   UserControllers.getMe,
 );

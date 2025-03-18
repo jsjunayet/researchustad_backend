@@ -24,10 +24,13 @@ const userSchema = new Schema<TUser, UserModel>(
     passwordChangedAt: {
       type: Date,
     },
-    role: {
-      type: String,
-      enum: ['superAdmin','ResearchAssociate'],
-    },
+    role:  { 
+      type: String, 
+      enum: {
+          values: ["Advisor" , "Lead" , "Mentor_Panel" , "Lead_Research_Associate" , "Research_Associate","superAdmin"], 
+          message: "Status must be either Advisor | Lead | Mentor_Panel | Lead_Research_Associate | Research_Associate"
+      },
+  },
     status: {
       type: String,
       enum: UserStatus,
@@ -80,4 +83,4 @@ userSchema.statics.isJWTIssuedBeforePasswordChanged = function (
   return passwordChangedTime > jwtIssuedTimestamp;
 };
 
-export const User = mongoose.models.User || model<TUser, UserModel>('User', userSchema);
+export const User = (mongoose.models.User as UserModel) || model<TUser, UserModel>('User', userSchema);

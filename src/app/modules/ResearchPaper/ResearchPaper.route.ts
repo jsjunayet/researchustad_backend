@@ -7,7 +7,7 @@ import { researchPaperSchema } from './ResearchPaper.validation';
 const router = express.Router();
 router.post(
   '/add',
-  auth(USER_ROLE.superAdmin, USER_ROLE.ResearchAssociate),
+  auth(USER_ROLE.superAdmin, USER_ROLE.Research_Associate),
   validateRequest(researchPaperSchema),
   ResearchPaperControllers.postResearchUstad,
 );

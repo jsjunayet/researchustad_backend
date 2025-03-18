@@ -1,12 +1,11 @@
 import httpStatus from 'http-status';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
-import { AssociateServices } from './ResearchAssociate.service';
+import { AssociateServices } from './ResearchMembar.service';
 
 const getSingleAssociate = catchAsync(async (req, res) => {
   const { id } = req.params;
   const result = await AssociateServices.getSingleAssociate(id);
-
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -29,9 +28,6 @@ const getAllAssociate = catchAsync(async (req, res) => {
 
 const updateAssociate = catchAsync(async (req, res) => {
   const { id } = req.params;
-  console.log(req.body
-
-  );
   const { ResearchAssociate } = req.body;
   const result = await AssociateServices.updateAssociate(id, ResearchAssociate);
 
@@ -46,7 +42,6 @@ const updateAssociate = catchAsync(async (req, res) => {
 const deleteAssociate = catchAsync(async (req, res) => {
   const { id } = req.params;
   const result = await AssociateServices.deleteAssociate(id);
-
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,

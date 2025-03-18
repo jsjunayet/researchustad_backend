@@ -4,13 +4,13 @@ import mongoose from 'mongoose';
 import QueryBuilder from '../../builder/QueryBuilder';
 import AppError from '../../errors/AppError';
 import { User } from '../User/user.model';
-import { ResearchAssociate } from './ResearchAssociate.model';
+import { ResearchAssociate } from './ResearchMembar.model';
 // import { ResearchAssociate } from './ResearchAssociate.model';
 // import { ResearchAssociate } from './ResearchAssociate.model';
 // import { ResearchAssociate } from './ResearchAssociate.model';
 // import { ResearchAssociate } from './ResearchAssociate.model';
 
-import { IResearchAssociate } from './ResearchAssociate.interface';
+import { IResearchAssociate } from './ResearchMembar.interface';
 const getAllAssociate = async (query: Record<string, unknown>) => {
   const facultyQuery = new QueryBuilder(
     ResearchAssociate.find(),

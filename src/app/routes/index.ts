@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { AuthRoutes } from '../modules/Auth/auth.route';
 import { UserRoutes } from '../modules/User/user.route';
 import { ResearchPaperRoutes } from '../modules/ResearchPaper/ResearchPaper.route';
-import { AssociateRoutes } from '../modules/ResearchAssociate/ResearchAccociate.router';
+import { AssociateRoutes } from '../modules/ResearchMembar/ResearchMembar.router';
 import { CourseRouter } from '../modules/Course/Course.router';
 import { eventRouter } from '../modules/Event/event.router';
 const router = Router();

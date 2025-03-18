@@ -1,12 +1,11 @@
 import { Types } from "mongoose";
-
 export interface IResearchAssociate {
       user: Types.ObjectId;
       profileImg?: string;
       fullName: string; 
     email: string;
     contactNo: string;
-    designation: string; 
+    role: "Advisor" | "Lead" | "Mentor_Panel" | "Lead_Research_Associate" | "Research_Associate"; 
     current?: {
       institution?: string;
       department?: string;

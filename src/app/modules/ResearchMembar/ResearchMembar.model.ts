@@ -1,8 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { IResearchAssociate } from './ResearchAssociate.interface';
-
-
-
+import { IResearchAssociate } from './ResearchMembar.interface';
 const ResearchAssociateSchema = new Schema<IResearchAssociate>(
   {
     user: {
@@ -19,7 +16,13 @@ const ResearchAssociateSchema = new Schema<IResearchAssociate>(
       },
       contactNo: { type: String, required: [true, 'Contact number is required'] },
     fullName: { type: String, default: '' }, 
-    designation: { type: String, default: '' },
+    role:  { 
+      type: String, 
+      enum: {
+          values: ["Advisor" , "Lead" , "Mentor_Panel" , "Lead_Research_Associate" , "Research_Associate"], 
+          message: "Status must be either Advisor | Lead | Mentor_Panel | Lead_Research_Associate | Research_Associate"
+      },
+  },
     current: 
       {
         institution: { type: String, default: '' },
@@ -77,6 +80,6 @@ ResearchAssociateSchema.statics.isUserExists = async function (email: string) {
   return existingUser;
 };
 
-export const ResearchAssociate = model<IResearchAssociate>('ResearchAssociate', ResearchAssociateSchema);
+export const ResearchAssociate = model<IResearchAssociate>('ResearchMembar', ResearchAssociateSchema);
 
 

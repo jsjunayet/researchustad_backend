@@ -7,8 +7,8 @@ import AppError from '../../errors/AppError';
 import { sendImageToCloudinary } from '../../utils/sendImageToCloudinary';
 import { TUser } from './user.interface';
 import { sendEmail } from '../../utils/sendEmail';
-import { IResearchAssociate } from '../ResearchAssociate/ResearchAssociate.interface';
-import { ResearchAssociate } from '../ResearchAssociate/ResearchAssociate.model';
+import { IResearchAssociate } from '../ResearchMembar/ResearchMembar.interface';
+import { ResearchAssociate } from '../ResearchMembar/ResearchMembar.model';
 import { User } from './user.model';
 
 
@@ -20,7 +20,7 @@ const createResearchAssociate = async (
 ) => {
   const userData: Partial<TUser> = {};
   userData.password = password || (config.default_password as string);
-  userData.role = 'ResearchAssociate';
+  userData.role = payload.role;
   userData.email = payload.email;
   const session = await mongoose.startSession();
 
@@ -59,6 +59,8 @@ const createResearchAssociate = async (
     <ul>
       <li><strong>Email:</strong>  ${newUser[0].email}</li>
       <li><strong>Password:</strong> ${plainPassword}</li>
+      <li><strong>Role:</strong> ${newUser[0].role}</li>
+
     </ul>
 
     <p>For security reasons, we strongly recommend that you change your password immediately after logging in.</p>
