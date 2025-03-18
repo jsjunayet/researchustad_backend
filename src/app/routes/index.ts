@@ -4,6 +4,7 @@ import { UserRoutes } from '../modules/user/user.route';
 import { ResearchPaperRoutes } from '../modules/ResearchPaper/ResearchPaper.route';
 import { AssociateRoutes } from '../modules/ResearchAssociate/ResearchAccociate.router';
 import { CourseRouter } from '../modules/Course/Course.router';
+import { eventRouter } from '../modules/Event/event.router';
 
 const router = Router();
 
@@ -27,6 +28,10 @@ const moduleRoutes = [
   {
     path: '/course',
     route: CourseRouter,
+  },
+  {
+    path: '/event',
+    route: eventRouter,
   },
 ];
 
