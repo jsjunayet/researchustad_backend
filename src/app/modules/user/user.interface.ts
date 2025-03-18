@@ -1,13 +1,13 @@
 /* eslint-disable no-unused-vars */
 import { Model } from 'mongoose';
-import { USER_ROLE } from './user.constant';
+import { USER_ROLE } from './user.constant'
 
 export interface TUser {
   email: string;
   password: string;
   needsPasswordChange: boolean;
   passwordChangedAt?: Date;
-  role: 'superAdmin' | 'admin' | 'student' | 'faculty'|'ResearchAssociate';
+  role: 'superAdmin'|'ResearchAssociate';
   status: 'in-progress' | 'blocked';
   isDeleted: boolean;
 }

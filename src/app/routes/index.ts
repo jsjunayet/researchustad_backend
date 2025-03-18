@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { AuthRoutes } from '../modules/Auth/auth.route';
-import { UserRoutes } from '../modules/user/user.route';
+import { UserRoutes } from '../modules/User/user.route';
 import { ResearchPaperRoutes } from '../modules/ResearchPaper/ResearchPaper.route';
 import { AssociateRoutes } from '../modules/ResearchAssociate/ResearchAccociate.router';
 import { CourseRouter } from '../modules/Course/Course.router';
