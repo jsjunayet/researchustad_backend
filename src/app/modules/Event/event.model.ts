@@ -20,20 +20,11 @@ export const eventSchema = new Schema<IEvent>({
     },
     speakers: [
         {
-            name: { 
-                type: String, 
-                required: [true, "Speaker name is required"] 
-            },
-            bio: { 
-                type: String, 
-                required: [true, "Speaker bio is required"] 
-            },
-            imageUrl: { 
-                type: String, 
-                required: [true, "Speaker image URL is required"] 
-            },
-        },
-    ],
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User", // This will reference the Speaker model
+          required: [true, "Speaker ID is required"]
+        }
+      ],
     imageUrl: { 
         type: String, 
         required: [true, "Event image URL is required"] 

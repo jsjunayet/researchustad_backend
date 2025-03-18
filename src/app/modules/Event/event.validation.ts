@@ -7,12 +7,10 @@ const eventValidationPost= z.object({
         startDate: z.string().refine((val) => !isNaN(Date.parse(val)), { message: "Invalid start date format" }),
         location: z.string().min(1, { message: "Location is required" }),
         speakers: z.array(
-            z.object({
-                name: z.string().min(1, { message: "Speaker name is required" }),
-                bio: z.string().min(1, { message: "Speaker bio is required" }),
-                imageUrl: z.string().url({ message: "Invalid image URL format" }),
+            z.string().refine((id) => /^[0-9a-fA-F]{24}$/.test(id), {
+              message: "Invalid speaker ID format"
             })
-        ),
+          ).min(1, { message: "At least one speaker is required" }),
         imageUrl: z.string().url({ message: "Invalid event image URL format" }),
         registrationLink: z.string().url({ message: "Invalid registration link format" }),
         category: z.string().min(1, { message: "Category is required" }),
