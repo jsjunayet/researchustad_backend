@@ -5,9 +5,7 @@ import { ResearchPaperRoutes } from '../modules/ResearchPaper/ResearchPaper.rout
 import { AssociateRoutes } from '../modules/ResearchAssociate/ResearchAccociate.router';
 import { CourseRouter } from '../modules/Course/Course.router';
 import { eventRouter } from '../modules/Event/event.router';
-
 const router = Router();
-
 const moduleRoutes = [
   {
     path: '/auth',

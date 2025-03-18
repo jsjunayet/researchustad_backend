@@ -5,15 +5,15 @@ import validateRequest from '../../middlewares/validateRequest';
 import { upload } from '../../utils/sendImageToCloudinary';
 import { USER_ROLE } from './user.constant';
 
-import { UserControllers } from './user.controller';
 import { ResearchAssociateValidation } from '../ResearchAssociate/ResearchAssociate.validation';
+import { UserControllers } from './user.controller';
 
 
 const router = express.Router();
 
 router.post(
   '/create-ResearchAssociate',
-  auth(USER_ROLE.superAdmin, USER_ROLE.admin),
+  auth(USER_ROLE.superAdmin),
   upload.single('file'),
   (req: Request, res: Response, next: NextFunction) => {
     req.body = JSON.parse(req.body.data);

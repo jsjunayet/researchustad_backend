@@ -7,9 +7,9 @@ import AppError from '../../errors/AppError';
 import { sendImageToCloudinary } from '../../utils/sendImageToCloudinary';
 import { TUser } from './user.interface';
 import { sendEmail } from '../../utils/sendEmail';
-import { User } from './user.model';
 import { IResearchAssociate } from '../ResearchAssociate/ResearchAssociate.interface';
 import { ResearchAssociate } from '../ResearchAssociate/ResearchAssociate.model';
+import { User } from './user.model';
 
 
 

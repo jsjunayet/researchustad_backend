@@ -37,7 +37,7 @@ app.use(globalErrorHandler);
 //Not Found
 app.use(notFound);
 cron.schedule("*/1 * * * *", () => {
-  updateStatus(courseModel, "status", "startDate"); // Course model as usual
-  updateStatus(eventModel, "status", "startDate", "eventDuration"); // Event model with duration
+  updateStatus(courseModel, "status", "startDate"); 
+  updateStatus(eventModel, "status", "startDate", "eventDuration"); 
 });
 export default app;
