@@ -2,6 +2,7 @@ import httpStatus from 'http-status';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import { AssociateServices } from './ResearchMembar.service';
+// import { AssociateServices } from './ResearchMembar.service';
 
 const getSingleAssociate = catchAsync(async (req, res) => {
   const { id } = req.params;
