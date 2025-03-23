@@ -1,3 +1,5 @@
+import { Types } from "mongoose";
+
 export interface IResearchPaper{
     year: number;
     title: string;
@@ -11,4 +13,5 @@ export interface IResearchPaper{
     isApproved: boolean;
     createdAt?: Date;
     updatedAt?: Date;
+    user: Types.ObjectId
 }

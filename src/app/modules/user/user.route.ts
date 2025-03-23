@@ -8,14 +8,14 @@ import { ResearchAssociateValidation } from '../ResearchMembar/ResearchMembar.va
 import { UserControllers } from './user.controller';
 const router = express.Router();
 router.post(
-  '/create-ResearchAssociate',
+  '/create-ResearchMembar',
   auth(USER_ROLE.superAdmin,USER_ROLE.admin),  upload.single('file'),
   (req: Request, res: Response, next: NextFunction) => {
     req.body = JSON.parse(req.body.data);
     next();
   },
   validateRequest(ResearchAssociateValidation.createValidationSchema),
-  UserControllers.createResearchAssociate,
+  UserControllers.createResearchMembar
 );
 
 router.get(
@@ -26,6 +26,23 @@ router.get(
     USER_ROLE.user
   ),
   UserControllers.getMe,
+);
+
+router.get(
+  '/all',
+  auth(
+    USER_ROLE.superAdmin,
+    USER_ROLE.admin,
+  ),
+  UserControllers.Alluser,
+);
+router.put(
+  '/userToadmin/:id',
+  auth(
+    USER_ROLE.superAdmin,
+    USER_ROLE.admin,
+  ),
+  UserControllers.userToadmin,
 );
 
 export const UserRoutes = router;

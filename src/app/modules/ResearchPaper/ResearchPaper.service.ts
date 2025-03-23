@@ -2,8 +2,10 @@ import httpStatus from "http-status";
 import AppError from "../../errors/AppError";
 import { IResearchPaper } from "./ResearchPaper.interface";
 import { ResearchPaper } from "./ResearchPaper.model";
+import { Types } from "mongoose";
 
-const postResearchUstad= async(body:IResearchPaper)=>{
+const postResearchUstad= async(body:IResearchPaper, id:Types.ObjectId)=>{
+    body.user =id
     const result = await ResearchPaper.create(body)
     return result
 }
@@ -13,6 +15,10 @@ const getPublicResearchUstad= async()=>{
 }
 const getOngingResearchUstad= async()=>{
     const result = await ResearchPaper.find({ isApproved: false });
+    return result
+}
+const getpersonalPaperResearchUstad= async(id:string)=>{
+    const result = await ResearchPaper.find({ user:id });
     return result
 }
 const getAllResearchUstad= async()=>{
@@ -44,6 +50,7 @@ export const ResearchPaperService ={
     getAllResearchUstad,
     approveResearchUstad,
     deleteResearchUstad,
-    getOngingResearchUstad
+    getOngingResearchUstad,
+    getpersonalPaperResearchUstad
 
 }

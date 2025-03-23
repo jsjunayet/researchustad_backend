@@ -2,18 +2,19 @@ import httpStatus from 'http-status';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import { UserServices } from './user.service';
-const createResearchAssociate = catchAsync(async (req, res) => {
-  const { password, ResearchAssociate: ResearchAssociateData} = req.body;
-  const result = await UserServices.createResearchAssociate(
+const createResearchMembar = catchAsync(async (req, res) => {
+  const { password, ResearchMembar: ResearchMembarData} = req.body;
+  console.log(ResearchMembarData);
+  const result = await UserServices.createResearchMembar(
     req.file,
     password,
-    ResearchAssociateData,
+    ResearchMembarData,
   );
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'ResearchAssociate is created succesfully',
+    message: 'ResearchMembar is created succesfully',
     data: result,
   });
 });
@@ -30,7 +31,31 @@ const getMe = catchAsync(async (req, res) => {
   });
 });
 
+const Alluser = catchAsync(async (req, res) => {
+  const result = await UserServices.Alluser();
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'All User is retrieved succesfully',
+    data: result,
+  });
+});
+const userToadmin = catchAsync(async (req, res) => {
+  const {id}=req.params
+  const result = await UserServices.userToadmin(id);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'userToadmin is  succesfully',
+    data: result,
+  });
+});
+
 export const UserControllers = {
   getMe,
-  createResearchAssociate
+  createResearchMembar,
+  Alluser,
+  userToadmin
 };

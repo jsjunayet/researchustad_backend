@@ -12,7 +12,8 @@ const ResearchPaperSchema = new Schema<IResearchPaper>(
     journalRank: { type: String },
     visitLink: { type: String, required: true },
     journalType: { type: String },
-    isApproved: { type: Boolean, default: false }, 
+    isApproved: { type: Boolean, default: false },
+    user: { type: Schema.Types.ObjectId, ref: 'User', required: true }, 
   },
   { timestamps: true }
 );

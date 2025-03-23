@@ -1,5 +1,5 @@
 import { Types } from "mongoose";
-export interface IResearchAssociate {
+export interface IResearchMembar {
       user: Types.ObjectId;
       profileImg?: string;
       fullName: string; 

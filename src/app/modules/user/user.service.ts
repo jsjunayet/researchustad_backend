@@ -8,18 +8,19 @@ import AppError from '../../errors/AppError';
 import { sendImageToCloudinary } from '../../utils/sendImageToCloudinary';
 import { TUser } from './user.interface';
 import { sendEmail } from '../../utils/sendEmail';
-import { IResearchAssociate } from '../ResearchMembar/ResearchMembar.interface';
-import { ResearchAssociate } from '../ResearchMembar/ResearchMembar.model';
+import { IResearchMembar } from '../ResearchMembar/ResearchMembar.interface';
 import { User } from './user.model';
-const createResearchAssociate = async (
+import { ResearchMembar } from '../ResearchMembar/ResearchMembar.model';
+const createResearchMembar = async (
   file: any,
   password: string,
-  payload: IResearchAssociate,
+  payload: IResearchMembar,
 ) => {
   const userData: Partial<TUser> = {};
   userData.password = password || (config.default_password as string);
   userData.designation = payload.designation;
   userData.email = payload.email;
+  userData.fullName =payload.fullName
   const session = await mongoose.startSession();
 
   try {
@@ -37,8 +38,8 @@ const createResearchAssociate = async (
       throw new AppError(httpStatus.BAD_REQUEST, 'Failed to create user');
     }
     payload.email = newUser[0].email;
-    payload.user = newUser[0]._id; 
-    const newStudent = await ResearchAssociate.create([payload], { session });
+    payload.user = newUser[0]._id;
+    const newStudent = await ResearchMembar.create([payload], { session });
     if (!newStudent.length) {
       throw new AppError(httpStatus.BAD_REQUEST, 'Failed to create student');
     }
@@ -79,12 +80,29 @@ const createResearchAssociate = async (
   }
 };
 const getMe = async (email: string) => {
-   const result = await ResearchAssociate.findOne({ email: email });
+   const result = await User.findOne({ email: email });
    return result
 };
-
-
+const Alluser = async () => {
+  const result = await User.find();
+  return result
+};
+const userToadmin = async (id:string) => {
+  const user = await User.findById(id);
+  if (!user) {
+    throw new Error("User not found");
+  }
+  const newRole = user.role === "admin" ? "user" : "admin";
+  const result = await User.findByIdAndUpdate(
+    id,
+    { role: newRole },
+    { new: true, runValidators: true }
+  );
+  return result
+}
 export const UserServices = {
   getMe,
-  createResearchAssociate
+  createResearchMembar,
+  Alluser,
+  userToadmin
 };

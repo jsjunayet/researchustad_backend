@@ -24,6 +24,12 @@ router.get(
   '/onging',
   ResearchPaperControllers.getOngingResearchUstad
 );
+router.get(
+  '/personalPaper',
+  auth(USER_ROLE.superAdmin,USER_ROLE.admin, USER_ROLE.user),
+  ResearchPaperControllers.getOngingResearchUstad
+);
+
 router.put(
   '/approve/:id',
   auth(USER_ROLE.superAdmin,USER_ROLE.admin),

@@ -7,14 +7,27 @@ import { ResearchAssociateValidation } from './ResearchMembar.validation';
 const router = express.Router();
 router.get(
   '/:id',
+  auth(USER_ROLE.superAdmin,USER_ROLE.admin),
   AssociateControllers.getSingleAssociate,
+);
+
+router.get(
+  '/singleGet',
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin, USER_ROLE.user),
+  AssociateControllers.getsingleGetMembar,
 );
 
 router.patch(
   '/:id',
-  auth(USER_ROLE.superAdmin, USER_ROLE.admin, USER_ROLE.user),
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin),
   validateRequest(ResearchAssociateValidation.UpdateValidationSchema),
   AssociateControllers.updateAssociate,
+);
+router.put(
+  '/MembarUpdate',
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin, USER_ROLE.user),
+  validateRequest(ResearchAssociateValidation.UpdateValidationSchema),
+  AssociateControllers.updateForuserAssociate,
 );
 
 router.delete(
@@ -25,7 +38,6 @@ router.delete(
 
 router.get(
   '/',
-  auth(USER_ROLE.superAdmin,USER_ROLE.admin),
   AssociateControllers.getAllAssociate,
 );
 

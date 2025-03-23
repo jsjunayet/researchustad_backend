@@ -1,12 +1,22 @@
 import httpStatus from 'http-status';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
-import { AssociateServices } from './ResearchMembar.service';
-// import { AssociateServices } from './ResearchMembar.service';
+import { ResearchServices } from './ResearchMembar.service';
 
 const getSingleAssociate = catchAsync(async (req, res) => {
   const { id } = req.params;
-  const result = await AssociateServices.getSingleAssociate(id);
+  const result = await ResearchServices.getSingleMembar(id);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Associate is retrieved succesfully',
+    data: result,
+  });
+});
+
+const getsingleGetMembar = catchAsync(async (req, res) => {
+  const { email } = req.user;
+  const result = await ResearchServices.singleGetMembarForUser(email);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -16,7 +26,7 @@ const getSingleAssociate = catchAsync(async (req, res) => {
 });
 
 const getAllAssociate = catchAsync(async (req, res) => {
-  const result = await AssociateServices.getAllAssociate(req.query);
+  const result = await ResearchServices.getAllMembar(req.query);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -29,8 +39,20 @@ const getAllAssociate = catchAsync(async (req, res) => {
 
 const updateAssociate = catchAsync(async (req, res) => {
   const { id } = req.params;
-  const { ResearchAssociate } = req.body;
-  const result = await AssociateServices.updateAssociate(id, ResearchAssociate);
+  const { ResearchMembar} = req.body;
+  const result = await ResearchServices.updateMembar(id, ResearchMembar);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Associate is updated succesfully',
+    data: result,
+  });
+});
+const updateForuserAssociate = catchAsync(async (req, res) => {
+  const { email } = req.user;
+  const { ResearchMembar} = req.body;
+  const result = await ResearchServices.updateUserMembar(email, ResearchMembar);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -42,7 +64,7 @@ const updateAssociate = catchAsync(async (req, res) => {
 
 const deleteAssociate = catchAsync(async (req, res) => {
   const { id } = req.params;
-  const result = await AssociateServices.deleteAssociate(id);
+  const result = await ResearchServices.deleteMembar(id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -56,5 +78,6 @@ export const AssociateControllers = {
   updateAssociate,
   deleteAssociate,
   getAllAssociate,
-
+  updateForuserAssociate,
+  getsingleGetMembar
 };

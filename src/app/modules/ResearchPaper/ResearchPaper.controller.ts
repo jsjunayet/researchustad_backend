@@ -4,7 +4,8 @@ import sendResponse from "../../utils/sendResponse";
 import { ResearchPaperService } from "./ResearchPaper.service";
 
 const postResearchUstad = catchAsync(async (req, res) => {
-    const result = await ResearchPaperService.postResearchUstad(req.body);
+  const{id}=req.user
+    const result = await ResearchPaperService.postResearchUstad(req.body, id);
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
@@ -27,6 +28,16 @@ const postResearchUstad = catchAsync(async (req, res) => {
       statusCode: httpStatus.OK,
       success: true,
       message: 'ResearchPaper Onging retrieved succesfully',
+      data: result,
+    });
+  });
+  const getpersonalPaperResearchUstad = catchAsync(async (req, res) => {
+    const{id}=req.user
+    const result = await ResearchPaperService.getpersonalPaperResearchUstad(id);
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'ResearchPaper personalPaper retrieved succesfully',
       data: result,
     });
   });
@@ -66,5 +77,6 @@ export const ResearchPaperControllers={
     getAllResearchUstad,
     approveResearchUstad,
     deleteResearchUstad,
-    getOngingResearchUstad
+    getOngingResearchUstad,
+    getpersonalPaperResearchUstad
 }

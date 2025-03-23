@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose';
-import { IResearchAssociate } from './ResearchMembar.interface';
-const ResearchAssociateSchema = new Schema<IResearchAssociate>(
+import { IResearchMembar } from './ResearchMembar.interface';
+const ResearchMembarSchema = new Schema<IResearchMembar>(
   {
     user: {
       type: Schema.Types.ObjectId,
@@ -60,26 +60,26 @@ const ResearchAssociateSchema = new Schema<IResearchAssociate>(
 );
 
 
-ResearchAssociateSchema.pre('find', function (next) {
+ResearchMembarSchema.pre('find', function (next) {
   this.find({ isDeleted: { $ne: true } });
   next();
 });
 
-ResearchAssociateSchema.pre('findOne', function (next) {
+ResearchMembarSchema.pre('findOne', function (next) {
   this.find({ isDeleted: { $ne: true } });
   next();
 });
 
-ResearchAssociateSchema.pre('aggregate', function (next) {
+ResearchMembarSchema.pre('aggregate', function (next) {
   this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } });
   next();
 });
 
-ResearchAssociateSchema.statics.isUserExists = async function (email: string) {
-  const existingUser = await ResearchAssociate.findOne({ email});
+ResearchMembarSchema.statics.isUserExists = async function (email: string) {
+  const existingUser = await ResearchMembar.findOne({ email});
   return existingUser;
 };
 
-export const ResearchAssociate = model<IResearchAssociate>('ResearchMembar', ResearchAssociateSchema);
+export const ResearchMembar = model<IResearchMembar>('ResearchMembar', ResearchMembarSchema);
 
 

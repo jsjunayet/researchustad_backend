@@ -4,16 +4,11 @@ import mongoose from 'mongoose';
 import QueryBuilder from '../../builder/QueryBuilder';
 import AppError from '../../errors/AppError';
 import { User } from '../User/user.model';
-import { ResearchAssociate } from './ResearchMembar.model';
-// import { ResearchAssociate } from './ResearchAssociate.model';
-// import { ResearchAssociate } from './ResearchAssociate.model';
-// import { ResearchAssociate } from './ResearchAssociate.model';
-// import { ResearchAssociate } from './ResearchAssociate.model';
-
-import { IResearchAssociate } from './ResearchMembar.interface';
-const getAllAssociate = async (query: Record<string, unknown>) => {
-  const facultyQuery = new QueryBuilder(
-    ResearchAssociate.find(),
+import { IResearchMembar } from './ResearchMembar.interface';
+import { ResearchMembar } from './ResearchMembar.model';
+const getAllMembar = async (query: Record<string, unknown>) => {
+  const ResearchQuery = new QueryBuilder(
+    ResearchMembar.find(),
     query,
   )
     .search(['email'])
@@ -22,61 +17,27 @@ const getAllAssociate = async (query: Record<string, unknown>) => {
     .paginate()
     .fields();
 
-  const result = await facultyQuery.modelQuery;
-  const meta = await facultyQuery.countTotal();
+  const result = await ResearchQuery.modelQuery;
+  const meta = await ResearchQuery.countTotal();
   return {
     result,
     meta,
   };
 };
-// const getAllAssociate = async (query: Record<string, unknown>) => {
-//   const facultyQuery = new QueryBuilder(
-//     ResearchAssociate.find(),
-//     query,
-//   )
-//     .search(['email'])
-//     .filter()
-//     .sort()
-//     .paginate()
-//     .fields();
-
-//   const result = await facultyQuery.modelQuery;
-//   const meta = await facultyQuery.countTotal();
-//   return {
-//     result,
-//     meta,
-//   };
-// };
-// const getAllAssociate = async (query: Record<string, unknown>) => {
-//   const facultyQuery = new QueryBuilder(
-//     ResearchAssociate.find(),
-//     query,
-//   )
-//     .search(['email'])
-//     .filter()
-//     .sort()
-//     .paginate()
-//     .fields();
-
-//   const result = await facultyQuery.modelQuery;
-//   const meta = await facultyQuery.countTotal();
-//   return {
-//     result,
-//     meta,
-//   };
-// };
-// };
-const getSingleAssociate = async (email: string) => {
-  const result = await ResearchAssociate.findById(email)
-
+const getSingleMembar = async (id:string) => {
+  const result = await ResearchMembar.findById(id)
+  return result;
+};
+const singleGetMembarForUser = async (email:string) => {
+  const result = await ResearchMembar.findOne({email:email})
   return result;
 };
 
-const updateAssociate = async (email: string, payload: Partial<IResearchAssociate>) => {
-  const { current, education,socialLinks, ...remainingAssociateData } = payload;
+const updateMembar = async (id: string, payload: Partial<IResearchMembar>) => {
+  const { current, education, socialLinks, ...remainingMembarData } = payload;
 
   const modifiedUpdatedData: Record<string, unknown> = {
-    ...remainingAssociateData,
+    ...remainingMembarData,
   };
   if (current && Object.keys(current).length) {
     for (const [key, value] of Object.entries(current)) {
@@ -93,37 +54,59 @@ if(education && Object.keys(education).length){
       modifiedUpdatedData[`socialLinks.${key}`] = value;
     }
   }
+  const result = await ResearchMembar.findByIdAndUpdate(id, modifiedUpdatedData, {
+    new: true,
+    runValidators: true,
+  });
+  return result;
+};
+const updateUserMembar = async (email: string, payload: Partial<IResearchMembar>) => {
+  const { current, education, socialLinks, ...remainingMembarData } = payload;
 
-  const result = await ResearchAssociate.findByIdAndUpdate(email, modifiedUpdatedData, {
+  const modifiedUpdatedData: Record<string, unknown> = {
+    ...remainingMembarData,
+  };
+  if (current && Object.keys(current).length) {
+    for (const [key, value] of Object.entries(current)) {
+      modifiedUpdatedData[`current.${key}`] = value;
+    }
+  }
+if(education && Object.keys(education).length){
+  for(const[key, value] of Object.entries(education)){
+    modifiedUpdatedData[`education.${key}`]=value
+  }
+}
+  if (socialLinks && Object.keys(socialLinks).length) {
+    for (const [key, value] of Object.entries(socialLinks)) {
+      modifiedUpdatedData[`socialLinks.${key}`] = value;
+    }
+  }
+  console.log(email, modifiedUpdatedData);
+  const result = await ResearchMembar.updateOne({email}, modifiedUpdatedData, {
     new: true,
     runValidators: true,
   });
   return result;
 };
 
-const deleteAssociate = async (id: string) => {
+const deleteMembar = async (id: string) => {
   const session = await mongoose.startSession();
 
   try {
     session.startTransaction();
 
-    const deletedAssociate = await ResearchAssociate.findByIdAndUpdate(
-      id,
-      { isDeleted: true },
-      { new: true, session },
+    const deletedMembar = await ResearchMembar.findByIdAndDelete(
+      id
     );
 
-    if (!deletedAssociate) {
-      throw new AppError(httpStatus.BAD_REQUEST, 'Failed to delete faculty');
+    if (!deletedMembar) {
+      throw new AppError(httpStatus.BAD_REQUEST, 'Failed to delete user');
     }
 
-    const userId = deletedAssociate.user;
+    const userId = deletedMembar.user;
 
-    const deletedUser = await User.findByIdAndUpdate(
-      userId,
-      { isDeleted: true },
-      { new: true, session },
-    );
+    const deletedUser = await User.findByIdAndDelete(
+      userId);
 
     if (!deletedUser) {
       throw new AppError(httpStatus.BAD_REQUEST, 'Failed to delete user');
@@ -132,7 +115,7 @@ const deleteAssociate = async (id: string) => {
     await session.commitTransaction();
     await session.endSession();
 
-    return deletedAssociate;
+    return deletedMembar;
   } catch (err: any) {
     await session.abortTransaction();
     await session.endSession();
@@ -140,9 +123,10 @@ const deleteAssociate = async (id: string) => {
   }
 };
 
-export const AssociateServices = {
-    getSingleAssociate,
-    updateAssociate,
-    deleteAssociate,
-    getAllAssociate,
-};
+export const ResearchServices = {
+    getSingleMembar,
+    updateMembar,
+    deleteMembar,
+    getAllMembar,
+    updateUserMembar,
+    singleGetMembarForUser};
