@@ -16,7 +16,7 @@ const ResearchAssociateSchema = new Schema<IResearchAssociate>(
       },
       contactNo: { type: String, required: [true, 'Contact number is required'] },
     fullName: { type: String, default: '' }, 
-    role:  { 
+    designation:  { 
       type: String, 
       enum: {
           values: ["Advisor" , "Lead" , "Mentor_Panel" , "Lead_Research_Associate" , "Research_Associate"], 

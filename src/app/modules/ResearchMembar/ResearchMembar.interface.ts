@@ -5,7 +5,7 @@ export interface IResearchAssociate {
       fullName: string; 
     email: string;
     contactNo: string;
-    role: "Advisor" | "Lead" | "Mentor_Panel" | "Lead_Research_Associate" | "Research_Associate"; 
+    designation: "Advisor" | "Lead" | "Mentor_Panel" | "Lead_Research_Associate" | "Research_Associate"; 
     current?: {
       institution?: string;
       department?: string;

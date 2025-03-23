@@ -9,8 +9,7 @@ import { UserControllers } from './user.controller';
 const router = express.Router();
 router.post(
   '/create-ResearchAssociate',
-  auth(USER_ROLE.superAdmin),
-  upload.single('file'),
+  auth(USER_ROLE.superAdmin,USER_ROLE.admin),  upload.single('file'),
   (req: Request, res: Response, next: NextFunction) => {
     req.body = JSON.parse(req.body.data);
     next();
@@ -23,7 +22,8 @@ router.get(
   '/me',
   auth(
     USER_ROLE.superAdmin,
-    USER_ROLE.Research_Associate
+    USER_ROLE.admin,
+    USER_ROLE.user
   ),
   UserControllers.getMe,
 );

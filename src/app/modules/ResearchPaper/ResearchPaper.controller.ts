@@ -21,6 +21,15 @@ const postResearchUstad = catchAsync(async (req, res) => {
       data: result,
     });
   });
+  const getOngingResearchUstad = catchAsync(async (req, res) => {
+    const result = await ResearchPaperService.getOngingResearchUstad();
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'ResearchPaper Onging retrieved succesfully',
+      data: result,
+    });
+  });
   const getAllResearchUstad= catchAsync(async (req, res) => {
     const result = await ResearchPaperService.getAllResearchUstad();
     sendResponse(res, {
@@ -56,5 +65,6 @@ export const ResearchPaperControllers={
     getPublicResearchUstad,
     getAllResearchUstad,
     approveResearchUstad,
-    deleteResearchUstad
+    deleteResearchUstad,
+    getOngingResearchUstad
 }

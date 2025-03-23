@@ -7,30 +7,30 @@ import { researchPaperSchema } from './ResearchPaper.validation';
 const router = express.Router();
 router.post(
   '/add',
-  auth(USER_ROLE.superAdmin, USER_ROLE.Research_Associate),
+  auth(USER_ROLE.superAdmin, USER_ROLE.user, USER_ROLE.admin),
   validateRequest(researchPaperSchema),
   ResearchPaperControllers.postResearchUstad,
 );
-
 router.get(
   '/public',
   ResearchPaperControllers.getPublicResearchUstad,
 );
-
 router.get(
   '/all',
-  auth(USER_ROLE.superAdmin),
+  auth(USER_ROLE.superAdmin,USER_ROLE.admin),
   ResearchPaperControllers.getAllResearchUstad,
 );
-
+router.get(
+  '/onging',
+  ResearchPaperControllers.getOngingResearchUstad
+);
 router.put(
   '/approve/:id',
-  auth(USER_ROLE.superAdmin),
+  auth(USER_ROLE.superAdmin,USER_ROLE.admin),
   ResearchPaperControllers.approveResearchUstad,
 );
 router.delete(
     '/delete/:id',
-    auth(USER_ROLE.superAdmin),
-    ResearchPaperControllers.deleteResearchUstad,
+    auth(USER_ROLE.superAdmin,USER_ROLE.admin),    ResearchPaperControllers.deleteResearchUstad,
 );
 export const ResearchPaperRoutes = router;

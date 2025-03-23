@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
 import httpStatus from 'http-status';
 import mongoose from 'mongoose';
 import config from '../../config';
@@ -10,9 +11,6 @@ import { sendEmail } from '../../utils/sendEmail';
 import { IResearchAssociate } from '../ResearchMembar/ResearchMembar.interface';
 import { ResearchAssociate } from '../ResearchMembar/ResearchMembar.model';
 import { User } from './user.model';
-
-
-
 const createResearchAssociate = async (
   file: any,
   password: string,
@@ -20,7 +18,7 @@ const createResearchAssociate = async (
 ) => {
   const userData: Partial<TUser> = {};
   userData.password = password || (config.default_password as string);
-  userData.role = payload.role;
+  userData.designation = payload.designation;
   userData.email = payload.email;
   const session = await mongoose.startSession();
 
@@ -54,15 +52,12 @@ const createResearchAssociate = async (
        <h2 style="color: #4CAF50; text-align: center;">Welcome to ResearchUstad!</h2>
     <p>Dear ${payload.fullName},</p>
     <p>Congratulations! Your account has been successfully created on <strong>ResearchUstad</strong>. You now have access to our platform and can start exploring.</p>
-
     <h3>Your Account Details:</h3>
     <ul>
       <li><strong>Email:</strong>  ${newUser[0].email}</li>
       <li><strong>Password:</strong> ${plainPassword}</li>
-      <li><strong>Role:</strong> ${newUser[0].role}</li>
-
+      <li><strong>designation:</strong> ${newUser[0].designation}</li>
     </ul>
-
     <p>For security reasons, we strongly recommend that you change your password immediately after logging in.</p>
 
     <p><a href="${config.frontend_url} style="background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">Log In</a></p>
@@ -83,16 +78,9 @@ const createResearchAssociate = async (
     throw new Error(err);
   }
 };
-
-
-
-
-const getMe = async (email: string, role: string) => {
-  let result = null;
-  if (role === 'ResearchAssociate') {
-    result = await ResearchAssociate.findOne({ email: email }).populate('user');
-  }
-  return result;
+const getMe = async (email: string) => {
+   const result = await ResearchAssociate.findOne({ email: email });
+   return result
 };
 
 

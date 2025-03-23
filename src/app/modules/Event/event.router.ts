@@ -8,7 +8,7 @@ import { Validationevent } from "./event.validation";
 
 const router = Router();
 router.get('/', eventController.Getevent)
-router.post('/',   auth(USER_ROLE.superAdmin),
+router.post('/',   auth(USER_ROLE.superAdmin,USER_ROLE.admin),
  upload.single('file'),
  (req: Request, res: Response, next: NextFunction) => {
     req.body = JSON.parse(req.body.data);
@@ -16,7 +16,7 @@ router.post('/',   auth(USER_ROLE.superAdmin),
   },
   validateRequest(Validationevent.eventValidationPost),
  eventController.Postevent)
-router.patch('/:id',auth(USER_ROLE.superAdmin),validateRequest(Validationevent.eventValidationUpdate),
+router.patch('/:id',auth(USER_ROLE.superAdmin,USER_ROLE.admin),validateRequest(Validationevent.eventValidationUpdate),
 eventController.Updateevent)
-router.delete('/:id',auth(USER_ROLE.superAdmin),eventController.Deletedevent)
+router.delete('/:id',auth(USER_ROLE.superAdmin,USER_ROLE.admin),eventController.Deletedevent)
 export const eventRouter = router;

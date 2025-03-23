@@ -8,7 +8,7 @@ import auth from "../../middlewares/auth";
 
 const router = Router();
 router.get('/', courseController.GetCourse)
-router.post('/',   auth(USER_ROLE.superAdmin, USER_ROLE.Mentor_Panel),
+router.post('/',   auth(USER_ROLE.superAdmin,USER_ROLE.admin),
  upload.single('file'),
  (req: Request, res: Response, next: NextFunction) => {
     req.body = JSON.parse(req.body.data);
@@ -16,7 +16,7 @@ router.post('/',   auth(USER_ROLE.superAdmin, USER_ROLE.Mentor_Panel),
   },
   validateRequest(ValidationCourse.courseValidationPost),
  courseController.PostCourse)
-router.patch('/:id',auth(USER_ROLE.superAdmin, USER_ROLE.Mentor_Panel),validateRequest(ValidationCourse.courseValidationUpdate),
+router.patch('/:id',auth(USER_ROLE.superAdmin,USER_ROLE.admin),validateRequest(ValidationCourse.courseValidationUpdate),
 courseController.UpdateCourse)
-router.delete('/:id',auth(USER_ROLE.superAdmin),courseController.DeletedCourse)
+router.delete('/:id',auth(USER_ROLE.superAdmin,USER_ROLE.admin),courseController.DeletedCourse)
 export const CourseRouter = router;

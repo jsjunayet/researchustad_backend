@@ -24,7 +24,7 @@ const userSchema = new Schema<TUser, UserModel>(
     passwordChangedAt: {
       type: Date,
     },
-    role:  { 
+    designation:  { 
       type: String, 
       enum: {
           values: ["Advisor" , "Lead" , "Mentor_Panel" , "Lead_Research_Associate" , "Research_Associate","superAdmin"], 
@@ -36,6 +36,14 @@ const userSchema = new Schema<TUser, UserModel>(
       enum: UserStatus,
       default: 'in-progress',
     },
+    role: { 
+      type: String, 
+      enum: {
+          values: ["admin", "user"], 
+          message: "Status must be either 'admin' or 'user'"
+      },
+      default: "user" 
+  },
     isDeleted: {
       type: Boolean,
       default: false,

@@ -12,19 +12,20 @@ router.get(
 
 router.patch(
   '/:id',
-  auth(USER_ROLE.superAdmin, USER_ROLE.Research_Associate),
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin, USER_ROLE.user),
   validateRequest(ResearchAssociateValidation.UpdateValidationSchema),
   AssociateControllers.updateAssociate,
 );
 
 router.delete(
   '/:id',
-  auth(USER_ROLE.superAdmin),
+  auth(USER_ROLE.superAdmin,USER_ROLE.admin),
   AssociateControllers.deleteAssociate,
 );
 
 router.get(
   '/',
+  auth(USER_ROLE.superAdmin,USER_ROLE.admin),
   AssociateControllers.getAllAssociate,
 );
 

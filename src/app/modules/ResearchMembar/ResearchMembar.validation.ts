@@ -11,7 +11,7 @@ const createValidationSchema = z.object({
           
             fullName: z.string().min(1, { message: "Full name is required." }),
           
-         role: z.string().min(1, { message: "Role is required." }),
+            designation: z.string().min(1, { message: "Role is required." }),
           
             current: 
               z.object({
@@ -53,7 +53,7 @@ const UpdateValidationSchema = z.object({
       
         fullName: z.string().min(1, { message: "Full name is required." }).optional(),
       
-     role: z.string().min(1, { message: "Role is required." }).optional(),
+        designation: z.string().min(1, { message: "Role is required." }).optional(),
       
         current: 
           z.object({

@@ -11,6 +11,10 @@ const getPublicResearchUstad= async()=>{
     const result = await ResearchPaper.find({ isApproved: true });
     return result
 }
+const getOngingResearchUstad= async()=>{
+    const result = await ResearchPaper.find({ isApproved: false });
+    return result
+}
 const getAllResearchUstad= async()=>{
     const result = await ResearchPaper.find();
     return result
@@ -39,6 +43,7 @@ export const ResearchPaperService ={
     getPublicResearchUstad,
     getAllResearchUstad,
     approveResearchUstad,
-    deleteResearchUstad
+    deleteResearchUstad,
+    getOngingResearchUstad
 
 }
