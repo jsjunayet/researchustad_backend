@@ -5,6 +5,7 @@ import { ResearchPaperRoutes } from '../modules/ResearchPaper/ResearchPaper.rout
 import { AssociateRoutes } from '../modules/ResearchMembar/ResearchMembar.router';
 import { CourseRouter } from '../modules/Course/Course.router';
 import { eventRouter } from '../modules/Event/event.router';
+import { blogRouter } from '../modules/Blog/blog.router';
 const router = Router();
 const moduleRoutes = [
   {
@@ -31,6 +32,10 @@ const moduleRoutes = [
     path: '/event',
     route: eventRouter,
   },
+  {
+    path: '/blog',
+    route: blogRouter,
+  }
 ];
 
 moduleRoutes.forEach((route) => router.use(route.path, route.route));

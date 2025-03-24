@@ -30,8 +30,8 @@ const createResearchMembar = async (
       const path = file?.path;
       const { secure_url } = await sendImageToCloudinary(imageName, path);
       payload.profileImg = secure_url as string;
+      userData.image=secure_url as string
     }
-
     const newUser = await User.create([userData], { session });
  
     if (!newUser.length) {

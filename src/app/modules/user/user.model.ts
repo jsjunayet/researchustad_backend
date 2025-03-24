@@ -25,6 +25,10 @@ const userSchema = new Schema<TUser, UserModel>(
       type: String,
       required: true,
     },
+    image: {
+      type: String,
+      required: true,
+    },
     passwordChangedAt: {
       type: Date,
     },

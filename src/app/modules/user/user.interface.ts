@@ -12,7 +12,8 @@ export interface TUser {
   status: 'in-progress' | 'blocked';
   role:"admin"|'user'
   isDeleted: boolean;
-  fullName:string
+  fullName:string,
+  image:string
 }
 
 export interface UserModel extends Model<TUser> {
