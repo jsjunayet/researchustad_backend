@@ -16,6 +16,7 @@ const getSingleAssociate = catchAsync(async (req, res) => {
 
 const getsingleGetMembar = catchAsync(async (req, res) => {
   const { email } = req.user;
+  console.log(email);
   const result = await ResearchServices.singleGetMembarForUser(email);
   sendResponse(res, {
     statusCode: httpStatus.OK,

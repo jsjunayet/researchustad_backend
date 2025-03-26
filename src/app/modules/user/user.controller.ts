@@ -20,11 +20,9 @@ const createResearchMembar = catchAsync(async (req, res) => {
 });
 
 const createResearchMembars = catchAsync(async (req, res) => {
-  const { password, ResearchMembar: ResearchMembarData} = req.body;
-  console.log(password, ResearchMembarData);
   const result = await UserServices.createResearchMembars(
-    password,
-    ResearchMembarData,
+    req.body.password,
+    req.body.ResearchMembar,
   );
 
   sendResponse(res, {

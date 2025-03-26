@@ -29,6 +29,7 @@ router.get(
   ResearchPaperControllers.getpersonalPaperResearchUstad
 );
 
+
 router.get(
   '/personalPaper/:id',
   ResearchPaperControllers.getpersonalPaperResearchUstadforid
