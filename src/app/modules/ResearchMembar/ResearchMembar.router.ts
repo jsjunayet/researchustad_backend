@@ -7,7 +7,6 @@ import { ResearchAssociateValidation } from './ResearchMembar.validation';
 const router = express.Router();
 router.get(
   '/:id',
-  auth(USER_ROLE.superAdmin,USER_ROLE.admin),
   AssociateControllers.getSingleAssociate,
 );
 

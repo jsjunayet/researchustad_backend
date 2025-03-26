@@ -24,7 +24,7 @@ const createResearchMembar = async (
   const session = await mongoose.startSession();
 
   try {
-    session.startTransaction();
+   await session.startTransaction();
     if (file) {
       const imageName = `${userData.email}${payload?.fullName}`;
       const path = file?.path;
@@ -41,11 +41,8 @@ const createResearchMembar = async (
     payload.user = newUser[0]._id;
     const newStudent = await ResearchMembar.create([payload], { session });
     if (!newStudent.length) {
-      throw new AppError(httpStatus.BAD_REQUEST, 'Failed to create student');
+      throw new AppError(httpStatus.BAD_REQUEST, 'Failed to create Membar');
     }
-
-    await session.commitTransaction();
-    await session.endSession();
     const plainPassword = password || (config.default_password as string);
 
     const subject = 'Welcome to ResearchUstad'
@@ -70,13 +67,76 @@ const createResearchMembar = async (
     `;
 
     await sendEmail(newUser[0].email, emailContent, subject);
-
-
+    await session.commitTransaction();
+    // await session.endSession();
     return newStudent;
   } catch (err: any) {
     await session.abortTransaction();
-    await session.endSession();
-    throw new Error(err);
+    // await session.endSession();
+    throw err
+  }finally{
+    await session.endSession()
+  }
+};
+
+const createResearchMembars = async (
+  password: string,
+  payload: IResearchMembar,
+) => {
+  const userData: Partial<TUser> = {};
+  userData.password = password || (config.default_password as string);
+  userData.designation = payload.designation;
+  userData.email = payload.email;
+  userData.fullName =payload.fullName
+  const session = await mongoose.startSession();
+  userData.image=payload.profileImg as string
+
+  try {
+     session.startTransaction();
+    const newUser = await User.create([userData], { session });
+ 
+    if (!newUser.length) {
+      throw new AppError(httpStatus.BAD_REQUEST, 'Failed to create user');
+    }
+    payload.email = newUser[0].email;
+    payload.user = newUser[0]._id;
+    const newStudent = await ResearchMembar.create([payload], { session });
+    if (!newStudent.length) {
+      throw new AppError(httpStatus.BAD_REQUEST, 'Failed to create Membar');
+    }
+    const plainPassword = password || (config.default_password as string);
+
+    const subject = 'Welcome to ResearchUstad'
+    const emailContent = `
+       <h2 style="color: #4CAF50; text-align: center;">Welcome to ResearchUstad!</h2>
+    <p>Dear ${payload.fullName},</p>
+    <p>Congratulations! Your account has been successfully created on <strong>ResearchUstad</strong>. You now have access to our platform and can start exploring.</p>
+    <h3>Your Account Details:</h3>
+    <ul>
+      <li><strong>Email:</strong>  ${newUser[0].email}</li>
+      <li><strong>Password:</strong> ${plainPassword}</li>
+      <li><strong>designation:</strong> ${newUser[0].designation}</li>
+    </ul>
+    <p>For security reasons, we strongly recommend that you change your password immediately after logging in.</p>
+
+    <p><a href="${config.frontend_url} style="background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">Log In</a></p>
+
+    <p>If you have any questions, feel free to reach out to our support team.</p>
+
+    <p>Best regards,</p>
+    <p><strong>The ResearchUstad Team</strong></p>
+    `;
+
+    await sendEmail(newUser[0].email, emailContent, subject);
+    await session.commitTransaction();
+    // await session.endSession();
+    return newStudent;
+  } catch (err: any) {
+    await session.abortTransaction();
+    // await session.endSession();
+    throw err
+  }finally{
+    await session.endSession()
   }
 };
 const getMe = async (email: string) => {
@@ -104,5 +164,6 @@ export const UserServices = {
   getMe,
   createResearchMembar,
   Alluser,
-  userToadmin
+  userToadmin,
+  createResearchMembars
 };

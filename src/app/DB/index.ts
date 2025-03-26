@@ -6,7 +6,9 @@ const superUser = {
   email: 'anissir@gmail.com',
   password: config.super_admin_password,
   needsPasswordChange: false,
-  role: USER_ROLE.superAdmin,
+  role: 'superAdmin',
+  image:"https://i.ibb.co.com/9HK7CcHy/Whats-App-Image-2025-03-12-at-11-29-38-8d375b0e.jpg",
+  fullName:"Anis Islam",
   status: 'in-progress',
   isDeleted: false,
 };

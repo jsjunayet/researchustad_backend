@@ -47,7 +47,7 @@ const userSchema = new Schema<TUser, UserModel>(
     role: { 
       type: String, 
       enum: {
-          values: ["admin", "user"], 
+          values: ["admin", "user", "superAdmin"], 
           message: "Status must be either 'admin' or 'user'"
       },
       default: "user" 

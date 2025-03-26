@@ -32,8 +32,19 @@ const postResearchUstad = catchAsync(async (req, res) => {
     });
   });
   const getpersonalPaperResearchUstad = catchAsync(async (req, res) => {
-    const{id}=req.user
+    const{id}=req.params
     const result = await ResearchPaperService.getpersonalPaperResearchUstad(id);
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'ResearchPaper personalPaper retrieved succesfully',
+      data: result,
+    });
+  });
+
+  const getpersonalPaperResearchUstadforid = catchAsync(async (req, res) => {
+    const{id}=req.params
+    const result = await ResearchPaperService.getpersonalPaperResearchUstadforid(id);
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
@@ -78,5 +89,6 @@ export const ResearchPaperControllers={
     approveResearchUstad,
     deleteResearchUstad,
     getOngingResearchUstad,
-    getpersonalPaperResearchUstad
+    getpersonalPaperResearchUstad,
+    getpersonalPaperResearchUstadforid
 }

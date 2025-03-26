@@ -18,6 +18,13 @@ router.post(
   UserControllers.createResearchMembar
 );
 
+router.post(
+  '/create-ResearchMembars',
+  auth(USER_ROLE.superAdmin,USER_ROLE.admin),
+  validateRequest(ResearchAssociateValidation.createValidationSchema),
+  UserControllers.createResearchMembars
+);
+
 router.get(
   '/me',
   auth(

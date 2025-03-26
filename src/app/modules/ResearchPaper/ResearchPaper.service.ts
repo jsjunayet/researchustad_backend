@@ -21,6 +21,10 @@ const getpersonalPaperResearchUstad= async(id:string)=>{
     const result = await ResearchPaper.find({ user:id });
     return result
 }
+const getpersonalPaperResearchUstadforid= async(id:string)=>{
+    const result = await ResearchPaper.findById(id);
+    return result
+}
 const getAllResearchUstad= async()=>{
     const result = await ResearchPaper.find();
     return result
@@ -51,6 +55,7 @@ export const ResearchPaperService ={
     approveResearchUstad,
     deleteResearchUstad,
     getOngingResearchUstad,
-    getpersonalPaperResearchUstad
+    getpersonalPaperResearchUstad,
+    getpersonalPaperResearchUstadforid
 
 }

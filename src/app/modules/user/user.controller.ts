@@ -19,6 +19,22 @@ const createResearchMembar = catchAsync(async (req, res) => {
   });
 });
 
+const createResearchMembars = catchAsync(async (req, res) => {
+  const { password, ResearchMembar: ResearchMembarData} = req.body;
+  console.log(password, ResearchMembarData);
+  const result = await UserServices.createResearchMembars(
+    password,
+    ResearchMembarData,
+  );
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'ResearchMembar is created succesfully',
+    data: result,
+  });
+});
+
 const getMe = catchAsync(async (req, res) => {
   const { email } = req.user;
   const result = await UserServices.getMe(email);
@@ -57,5 +73,6 @@ export const UserControllers = {
   getMe,
   createResearchMembar,
   Alluser,
-  userToadmin
+  userToadmin,
+  createResearchMembars
 };

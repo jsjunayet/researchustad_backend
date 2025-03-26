@@ -25,9 +25,13 @@ router.get(
   ResearchPaperControllers.getOngingResearchUstad
 );
 router.get(
-  '/personalPaper',
-  auth(USER_ROLE.superAdmin,USER_ROLE.admin, USER_ROLE.user),
-  ResearchPaperControllers.getOngingResearchUstad
+  '/personalPapers/:id',
+  ResearchPaperControllers.getpersonalPaperResearchUstad
+);
+
+router.get(
+  '/personalPaper/:id',
+  ResearchPaperControllers.getpersonalPaperResearchUstadforid
 );
 
 router.put(
