@@ -42,6 +42,17 @@ const postResearchUstad = catchAsync(async (req, res) => {
     });
   });
 
+  const getpersonalPaperResearch = catchAsync(async (req, res) => {
+    const{id}=req.user
+    const result = await ResearchPaperService.getpersonalPaperResearch(id);
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'ResearchPaper personalPaper retrieved succesfully',
+      data: result,
+    });
+  });
+
   const getpersonalPaperResearchUstadforid = catchAsync(async (req, res) => {
     const{id}=req.params
     const result = await ResearchPaperService.getpersonalPaperResearchUstadforid(id);
@@ -78,10 +89,7 @@ const postResearchUstad = catchAsync(async (req, res) => {
       message: 'ResearchPaper Deleted succesfully',
       data: result,
     });
-  });
-
-
-
+  })
 export const ResearchPaperControllers={
     postResearchUstad,
     getPublicResearchUstad,
@@ -90,5 +98,6 @@ export const ResearchPaperControllers={
     deleteResearchUstad,
     getOngingResearchUstad,
     getpersonalPaperResearchUstad,
-    getpersonalPaperResearchUstadforid
+    getpersonalPaperResearchUstadforid,
+    getpersonalPaperResearch
 }

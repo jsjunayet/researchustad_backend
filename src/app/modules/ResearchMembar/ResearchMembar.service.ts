@@ -98,7 +98,6 @@ const deleteMembar = async (id: string) => {
     const deletedMembar = await ResearchMembar.findByIdAndDelete(
       id
     );
-
     if (!deletedMembar) {
       throw new AppError(httpStatus.BAD_REQUEST, 'Failed to delete user');
     }

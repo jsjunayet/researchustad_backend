@@ -42,6 +42,25 @@ router.get(
   ),
   UserControllers.Alluser,
 );
+
+router.get(
+  '/userinfo',
+  auth(
+    USER_ROLE.superAdmin,
+    USER_ROLE.admin,
+  ),
+  UserControllers.AllInfo,
+);
+
+router.get(
+  '/personalinfo',
+  auth(
+    USER_ROLE.superAdmin,
+    USER_ROLE.admin,
+    USER_ROLE.user
+  ),
+  UserControllers.AllInfoForPersonal,
+);
 router.put(
   '/userToadmin/:id',
   auth(

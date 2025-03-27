@@ -11,6 +11,8 @@ import { sendEmail } from '../../utils/sendEmail';
 import { IResearchMembar } from '../ResearchMembar/ResearchMembar.interface';
 import { User } from './user.model';
 import { ResearchMembar } from '../ResearchMembar/ResearchMembar.model';
+import { ResearchPaper } from '../ResearchPaper/ResearchPaper.model';
+import { Blog } from '../Blog/blog.model';
 const createResearchMembar = async (
   file: any,
   password: string,
@@ -147,6 +149,54 @@ const Alluser = async () => {
   const result = await User.find();
   return result
 };
+const AllInfo = async () => {
+  const [
+    totalUsers,
+    totalResearchMembers,
+    totalApprovedPapers,
+    totalPendingPapers,
+    totalResearchPapers,
+    totalBlogs
+  ] = await Promise.all([
+    User.countDocuments(),
+    ResearchMembar.countDocuments(),
+    ResearchPaper.countDocuments({ isApproved: true }),
+    ResearchPaper.countDocuments({ isApproved: false }),
+    ResearchPaper.countDocuments(),
+    Blog.countDocuments(),
+  ]);
+
+  return {
+    totalUsers,
+    totalResearchMembers,
+    totalApprovedPapers,
+    totalPendingPapers,
+    totalResearchPapers,
+    totalBlogs,
+  };
+};
+
+const AllInfoForPersonal = async (id:string) => {
+  const [
+    totalApprovedPapers,
+    totalPendingPapers,
+    totalResearchPapers,
+    totalBlogs
+  ] = await Promise.all([
+    ResearchPaper.countDocuments({ isApproved: true,user:id }),
+    ResearchPaper.countDocuments({ isApproved: false, user:id}),
+    ResearchPaper.countDocuments({user:id}),
+    Blog.countDocuments({author:id}),
+  ]);
+
+  return {
+    totalApprovedPapers,
+    totalPendingPapers,
+    totalResearchPapers,
+    totalBlogs,
+  };
+};
+
 const userToadmin = async (id:string) => {
   const user = await User.findById(id);
   if (!user) {
@@ -165,5 +215,7 @@ export const UserServices = {
   createResearchMembar,
   Alluser,
   userToadmin,
-  createResearchMembars
+  createResearchMembars,
+  AllInfo,
+  AllInfoForPersonal
 };

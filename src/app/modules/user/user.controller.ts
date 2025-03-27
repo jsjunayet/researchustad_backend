@@ -55,6 +55,29 @@ const Alluser = catchAsync(async (req, res) => {
     data: result,
   });
 });
+
+const AllInfo = catchAsync(async (req, res) => {
+  const result = await UserServices.AllInfo();
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'AllInfo is retrieved succesfully',
+    data: result,
+  });
+});
+
+const AllInfoForPersonal = catchAsync(async (req, res) => {
+  const {id}=req.user
+  const result = await UserServices.AllInfoForPersonal(id);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'AllInfoForPersonal is retrieved succesfully',
+    data: result,
+  });
+});
 const userToadmin = catchAsync(async (req, res) => {
   const {id}=req.params
   const result = await UserServices.userToadmin(id);
@@ -72,5 +95,7 @@ export const UserControllers = {
   createResearchMembar,
   Alluser,
   userToadmin,
-  createResearchMembars
+  createResearchMembars,
+  AllInfo,
+  AllInfoForPersonal
 };

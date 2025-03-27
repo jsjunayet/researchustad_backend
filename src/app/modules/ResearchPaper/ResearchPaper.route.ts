@@ -35,6 +35,12 @@ router.get(
   ResearchPaperControllers.getpersonalPaperResearchUstadforid
 );
 
+router.get(
+  '/personalPaper',
+  auth(USER_ROLE.superAdmin, USER_ROLE.user, USER_ROLE.admin),
+  ResearchPaperControllers.getpersonalPaperResearch
+);
+
 router.put(
   '/approve/:id',
   auth(USER_ROLE.superAdmin,USER_ROLE.admin),
