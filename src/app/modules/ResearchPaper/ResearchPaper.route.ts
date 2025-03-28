@@ -48,6 +48,7 @@ router.put(
 );
 router.delete(
     '/delete/:id',
-    auth(USER_ROLE.superAdmin,USER_ROLE.admin),    ResearchPaperControllers.deleteResearchUstad,
+    auth(USER_ROLE.superAdmin,USER_ROLE.admin,USER_ROLE.user),   
+     ResearchPaperControllers.deleteResearchUstad,
 );
 export const ResearchPaperRoutes = router;
