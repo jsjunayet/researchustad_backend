@@ -5,7 +5,6 @@ export interface IBlog {
   author: mongoose.Types.ObjectId;
   image: string;
   shortDescription: string
-  category: string;
   publishedDate: Date;
 }
 

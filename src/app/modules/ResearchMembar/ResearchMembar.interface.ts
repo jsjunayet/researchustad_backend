@@ -1,6 +1,7 @@
 import { Types } from "mongoose";
 export interface IResearchMembar {
       user: Types.ObjectId;
+      password?:string
       profileImg?: string;
       fullName: string; 
     email: string;

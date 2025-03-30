@@ -1,7 +1,6 @@
 
 import { Types } from "mongoose";
 import AppError from "../../errors/AppError";
-import { sendImageToCloudinary } from "../../utils/sendImageToCloudinary";
 import { IBlog } from "./blog.interface";
 import { Blog } from "./blog.model";
 
@@ -15,13 +14,7 @@ const Authorblog= async(id:string)=>{
     return result
 }
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const Postblog = async(body:IBlog, file:any, id:Types.ObjectId)=>{
-    if (file) {
-        const imageName = `${body.title}${body?.category}`;
-        const path = file?.path;
-        const { secure_url } = await sendImageToCloudinary(imageName, path);
-        body.image = secure_url as string;
-    }
+const Postblog = async(body:IBlog, id:Types.ObjectId)=>{
     body.author=id
     const result = await Blog.create(body)
     return result

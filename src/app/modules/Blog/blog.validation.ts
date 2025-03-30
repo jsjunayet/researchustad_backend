@@ -5,13 +5,12 @@ const blogValidationPost = z.object({
     title: z.string().min(1, { message: "Title is required" }),
     author: z.string().refine((id) => /^[0-9a-fA-F]{24}$/.test(id), {
       message: "Invalid author ID format",
-    }),
+    }).optional(),
     image: z.string().url({ message: "Invalid blog image URL format" }),
     shortDescription: z.string().min(1, { message: "Short description is required" }),
-    category: z.string().min(1, { message: "Category is required" }),
     publishedDate: z.string().refine((val) => !isNaN(Date.parse(val)), {
       message: "Invalid published date format",
-    }),
+    }).optional(),
   }),
 });
 

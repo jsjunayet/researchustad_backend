@@ -26,9 +26,7 @@ const Getblog = catchAsync(async (req, res) => {
 const Postblog= catchAsync(async (req,res) =>{
 const body = req.body;
 const {id}=req.user
-
-
-const result = await blogService.Postblog(body,req.file, id)
+const result = await blogService.Postblog(body, id)
 sendResponse(res,{
       statusCode: httpStatus.OK,
       success: true,
@@ -58,10 +56,9 @@ const Updateblog= catchAsync(async (req,res) =>{
               data: result,
         })
         })
-
         const Getblogsingle= catchAsync(async (req,res) =>{
             const {id} = req.params
-            const result = await blogService.Deletedblog(id)
+            const result = await blogService.Getblogsingle(id)
             sendResponse(res,{
                   statusCode: httpStatus.OK,
                   success: true,

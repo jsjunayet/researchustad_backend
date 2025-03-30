@@ -15,6 +15,19 @@ const createValidationSchema = z.object({
         })
          })
 });
+
+const createValidationSchemaJson = z.object({
+  body:z.object({
+        password: z.string().max(20),
+          email: z.string().email({ message: "Invalid email format." }),
+    
+          contactNo: z.string().min(10, { message: "Contact number must be at least 10 digits." }),
+        
+          fullName: z.string().min(1, { message: "Full name is required." }),
+        
+          designation: z.string().min(1, { message: "Role is required." })
+      })
+});
 const UpdateValidationSchema = z.object({
    body:z.object({
     ResearchMembar:z.object({
@@ -62,5 +75,6 @@ const UpdateValidationSchema = z.object({
 
 export const ResearchAssociateValidation={
     createValidationSchema,
-    UpdateValidationSchema
+    UpdateValidationSchema,
+    createValidationSchemaJson
 }

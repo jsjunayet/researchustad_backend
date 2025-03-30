@@ -82,16 +82,15 @@ const createResearchMembar = async (
 };
 
 const createResearchMembars = async (
-  password: string,
   payload: IResearchMembar,
 ) => {
   const userData: Partial<TUser> = {};
-  userData.password = password || (config.default_password as string);
+  userData.password = payload.password || (config.default_password as string);
   userData.designation = payload.designation;
   userData.email = payload.email;
   userData.fullName =payload.fullName
-  const session = await mongoose.startSession();
   userData.image=payload.profileImg as string
+  const session = await mongoose.startSession();
 
   try {
      session.startTransaction();
@@ -106,7 +105,7 @@ const createResearchMembars = async (
     if (!newStudent.length) {
       throw new AppError(httpStatus.BAD_REQUEST, 'Failed to create Membar');
     }
-    const plainPassword = password || (config.default_password as string);
+    const plainPassword = payload.password || (config.default_password as string);
 
     const subject = 'Welcome to ResearchUstad'
     const emailContent = `

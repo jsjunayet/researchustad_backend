@@ -27,14 +27,13 @@ const getsingleGetMembar = catchAsync(async (req, res) => {
 });
 
 const getAllAssociate = catchAsync(async (req, res) => {
-  const result = await ResearchServices.getAllMembar(req.query);
+  const result = await ResearchServices.getAllMembar();
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Associate are retrieved succesfully',
-    meta: result.meta,
-    data: result.result,
+    data: result
   });
 });
 

@@ -20,7 +20,7 @@ router.post(
 
 router.post(
   '/create-ResearchMembars',
-  validateRequest(ResearchAssociateValidation.createValidationSchema),
+  validateRequest(ResearchAssociateValidation.createValidationSchemaJson),
   UserControllers.createResearchMembars
 );
 

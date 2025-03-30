@@ -1,28 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import httpStatus from 'http-status';
 import mongoose from 'mongoose';
-import QueryBuilder from '../../builder/QueryBuilder';
 import AppError from '../../errors/AppError';
 import { User } from '../User/user.model';
 import { IResearchMembar } from './ResearchMembar.interface';
 import { ResearchMembar } from './ResearchMembar.model';
-const getAllMembar = async (query: Record<string, unknown>) => {
-  const ResearchQuery = new QueryBuilder(
-    ResearchMembar.find(),
-    query,
-  )
-    .search(['email'])
-    .filter()
-    .sort()
-    .paginate()
-    .fields();
-
-  const result = await ResearchQuery.modelQuery;
-  const meta = await ResearchQuery.countTotal();
-  return {
-    result,
-    meta,
-  };
+const getAllMembar = async () => {
+  const result = await ResearchMembar.find()
+  return result
+  
 };
 const getSingleMembar = async (id:string) => {
   const result = await ResearchMembar.findById(id)
